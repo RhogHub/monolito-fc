@@ -9,7 +9,6 @@ import ProductModel from "../../modules/product-adm/repository/product.model";
 import InvoiceModel from "../../modules/invoice/repository/invoice.model";
 import OrderModel from "../../modules/checkout/repository/order.model";
 import { Umzug } from "umzug"
-import { migrator } from "../test-migrations/config-migrations/migrator";
 import ProductCatalogModel from "../../modules/store-catalog/repository/product.model";
 import TransactionModel from "../../modules/payment/repository/transaction.model";
 
@@ -29,12 +28,9 @@ async function setupDb() {
         dialect: 'sqlite',
         storage: ':memory:',
         //storage: './db.sqlite',
-        logging: false
-        //sync: {alter: true}
+        logging: false        
     });
     sequelize.addModels([ClientModel,ProductCatalogModel,ProductModel,InvoiceModel,TransactionModel,OrderModel]);
-    // const migration = migrator(sequelize);
-    // await migration.up(); 
     await sequelize.sync({alter: true});
         
 }
