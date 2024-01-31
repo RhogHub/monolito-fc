@@ -1,0 +1,72 @@
+import { Sequelize } from "sequelize-typescript";
+import ProductCatalogModel from "./product.model";
+import ProductRepository from "./product.repository";
+
+
+describe("ProductRepository test", () => {
+    let sequelize: Sequelize;
+
+    beforeEach(async () => {
+        sequelize = new Sequelize({
+            dialect: "sqlite",
+            storage: ":memory:",
+            logging: false,
+            sync: { force: true },
+        });
+
+        sequelize.addModels([ProductCatalogModel]);
+        await sequelize.sync();
+    });
+
+    afterEach(async () => {
+        await sequelize.close();
+    });
+
+    it("should find all products",async () => {
+        await ProductCatalogModel.create({
+            id: "1",
+            name: "Product 1",
+            description: "Description Product 1",
+            salesPrice: 100,
+        });
+
+        await ProductCatalogModel.create({
+            id: "2",
+            name: "Product 2",
+            description: "Description Product 2",
+            salesPrice: 200,
+        });
+
+        const productRepository = new ProductRepository();
+        const products = await productRepository.findAll();
+
+        expect(products.length).toBe(2);
+        expect(products[0].id.id).toBe("1");
+        expect(products[0].name).toBe("Product 1");
+        expect(products[0].description).toBe("Description Product 1");
+        expect(products[0].salesPrice).toBe(100);
+        expect(products[1].id.id).toBe("2");
+        expect(products[1].name).toBe("Product 2");
+        expect(products[1].description).toBe("Description Product 2");
+        expect(products[1].salesPrice).toBe(200);
+    });
+
+    it("should find a product", async () => {
+        await ProductCatalogModel.create({
+            id: "1",
+            name: "Product 1",
+            description: "Description Product 1",
+            salesPrice: 100,
+        });
+
+        const productRepository = new ProductRepository();
+        const product = await productRepository.find("1");
+
+        expect(product.id.id).toBe("1");
+        expect(product.name).toBe("Product 1");
+        expect(product.description).toBe("Description Product 1");
+        expect(product.salesPrice).toBe(100);
+    });
+
+
+});

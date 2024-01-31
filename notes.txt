@@ -1,0 +1,15 @@
+API - dependencias:
+npm i express @types/express dotenv
+npm i nodemon
+
+npm run dev -> roda o server
+
+npm i -D supertest
+npm i -D @types/supertest
+
+//Migrations:
+npm install --save-dev sequelize-cli  
+npx sequelize-cli init 
+npx sequelize-cli migration:generate --name product-migration
+npx sequelize-cli db:migrate
+npx sequelize-cli db:migrate:undo

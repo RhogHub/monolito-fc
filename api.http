@@ -1,0 +1,43 @@
+###
+POST http://localhost:3000/clients/ HTTP/1.1
+Content-Type: application/json; charset=utf-8
+
+{    
+    "name": "John",
+    "email": "john@x.com",
+    "document": "Document 1",
+    "street": "Street",
+    "number": "123",
+    "complement": "Complement 1",
+    "city": "City",
+    "state": "State",                    
+    "zipCode": "12345"
+}
+
+###
+POST http://localhost:3000/products/
+Content-Type: application/json; charset=utf-8
+
+{    
+    "name": "Teclado",
+    "description": "Description 1",
+    "purchasePrice": 133.33,  
+    "salesPrice": 200.00,   
+    "stock": 10 
+}
+
+###
+POST http://localhost:3000/checkout/ HTTP/1.1
+Content-Type: application/json; charset=utf-8
+
+{
+    "clientId": "79d5f85a-fe9e-43c1-9240-5b9cd9265baa",
+    "products":[
+        {
+            "productId": "c5fd5edb-93ca-4122-83a1-23b454267ce5"
+        }
+    ]
+}
+
+###
+GET http://localhost:3000/invoice/fe9ae057-62ba-48ab-bdda-7dbf80349512
